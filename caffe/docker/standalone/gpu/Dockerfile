@@ -30,8 +30,9 @@ WORKDIR $CAFFE_ROOT
 ENV CLONE_TAG=master
 
 RUN git clone -b ${CLONE_TAG} --depth 1 https://github.com/BVLC/caffe.git . && \
-    for req in $(cat python/requirements.txt) pydot; do pip install $req; done && \
-    mkdir build && cd build && \
+    for req in $(cat python/requirements.txt) pydot; do pip install $req; done
+
+RUN mkdir build && cd build && \
     cmake -DUSE_CUDNN=1 .. && \
     make -j"$(nproc)"
 
